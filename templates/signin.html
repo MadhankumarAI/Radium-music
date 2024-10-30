@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radium Music - Sign Up</title>
+    <style>
+        :root {
+            --radium-pink: #ff00ff;
+            --radium-blue: #00ffff;
+            --dark-bg: #121212;
+            --light-text: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            height: 90%;
+            background-image: url(/static/signup1.jpg);
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .signup-form {
+            background-color: black;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        h1 {
+            color: var(--radium-blue);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--radium-pink);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--radium-pink);
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+        }
+
+        button {
+            width: 90%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--radium-pink);
+            color: var(--light-text);
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--radium-blue);
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .signup-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form class="signup-form" id="signupForm" method="POST" action="/signup">
+            <h1>Sign Up for Radium Music</h1>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required aria-required="true">
+            </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'none'; // Reset error message display
+
+            if (password !== confirmPassword) {
+                event.preventDefault(); // Prevent form submission
+                errorMessage.textContent = "Passwords do not match!";
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
