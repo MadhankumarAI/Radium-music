@@ -1,0 +1,5 @@
+Flask
+smtplib
+email
+random
+secrets
