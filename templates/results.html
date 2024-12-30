@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        :root {
+        --radium-pink: #ff00ff;
+        --radium-blue: #00ffff;
+        --dark-bg: #121212;
+        --light-text: #ffffff;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }}
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, rgba(70, 130, 180, 0.6), rgba(255, 105, 180, 0.6));
+            background-size: 200% 200%;
+            animation: rotate-border 8s ease-in-out infinite;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.5s ease-out;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--radium-blue);
+            text-shadow: 0 0 10px var(--radium-pink);
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .navbar-links a:hover {
+            color: var(--radium-pink);
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .results-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .track-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .track-card:nth-child(1) { animation-delay: 0.1s; }
+        .track-card:nth-child(2) { animation-delay: 0.2s; }
+        .track-card:nth-child(3) { animation-delay: 0.3s; }
+        .track-card:nth-child(4) { animation-delay: 0.4s; }
+        .track-card:nth-child(5) { animation-delay: 0.5s; }
+        .track-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.5);
+        }
+
+        .track-title {
+            color: var(--radium-blue);
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            text-shadow: 0 0 5px var(--radium-pink);
+        }
+
+        .track-artist {
+            color: var(--light-text);
+            margin: 0 0 15px 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .spotify-player {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: var(--radium-pink);
+            color: var(--light-text);
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin: 20px 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .back-button:hover {
+            background-color: var(--radium-blue);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-container {
+                padding: 10px;
+            }
+
+            .track-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-brand">Radium Music</div>
+            <div class="navbar-links">
+                <a href="{{url_for('index')}}">Home</a>
+                <a href="{{url_for('signin')}}">Sign in</a>
+                <a href="{{url_for('signup')}}">Sign Up</a>
+                <a href="{{url_for('about')}}">About</a>
+            </div>
+        </nav>
+
+        <div class="results-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <h1>Search Results for "{{ query }}"</h1>
+            
+            <div class="results-grid">
+                {% for track in tracks %}
+                <div class="track-card">
+                    <h3 class="track-title">{{ track.title }}</h3>
+                    <p class="track-artist">{{ track.artist }}</p>
+                    <iframe 
+                        class="spotify-player"
+                        src="https://open.spotify.com/embed/track/{{ track.url.split(':')[2] }}"
+                        height="80" 
+                        frameborder="0" 
+                        allowtransparency="true" 
+                        allow="encrypted-media">
+                    </iframe>
+                </div>
+                {% endfor %}
+            </div>
+
+            <a href="/search" class="back-button">Back to Search</a>
+        </div>
+    </div>
+</body>
+</html>

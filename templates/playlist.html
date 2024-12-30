@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ playlist_name }} - Playlist</title>
+    <style>
+        .main-content { padding: 20px; }
+        .track-list { display: flex; flex-direction: column; gap: 10px; }
+        .track-item { padding: 10px; border: 1px solid #ccc; border-radius: 5px; display: flex; flex-direction: column; }
+        .track-controls { margin-top: 10px; }
+        .audio-player audio { width: 100%; }
+        .track-info img { max-width: 100px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>{{ playlist_name }}</h1>
+        <div class="track-list">
+            {% for track in tracks %}
+            <div class="track-item" data-id="{{ track.id }}">
+                <div class="track-info">
+                    <h3>{{ track.title }}</h3>
+                    <p><strong>Artist:</strong> {{ track.artist }}</p>
+                    <img src="{{ track.image_path }}" alt="{{ track.title }}" loading="lazy">
+                </div>
+                <div class="track-controls">
+                    <a href="{{ track.file_path }}" target="_blank">Play on Spotify</a>
+                    <button class="remix-btn">Remix</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="remixed-player" class="remixed-player" style="display: none;">
+            <h3>Remixed Track</h3>
+            <audio id="remixed-audio" controls></audio>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.remix-btn').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const item = e.target.closest('.track-item');
+                    const trackId = item.getAttribute('data-id');
+                    const response = await fetch('/remix', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ track_id: trackId, effects: {} })
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        const audio = document.getElementById('remixed-audio');
+                        const remixedPlayer = document.getElementById('remixed-player');
+                        remixedPlayer.style.display = 'block';
+                        audio.src = `/play/${result.output_file_path}`;
+                        await audio.play();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Radium Music</title>
+    <style>
+        :root {
+            --radium-pink: #ff00ff;
+            --radium-blue: #00ffff;
+            --dark-bg: #121212;
+            --light-text: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, rgba(70, 130, 180, 0.6), rgba(255, 105, 180, 0.6));
+            background-size: 200% 200%;
+            animation: gradient 8s ease-in-out infinite;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.5s ease-out;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--radium-blue);
+            text-shadow: 0 0 10px var(--radium-pink);
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .navbar-links a:hover {
+            color: var(--radium-pink);
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        h1, h2 {
+            color: var(--radium-blue);
+            text-shadow: 0 0 10px var(--radium-pink);
+        }
+
+        p, li {
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: var(--light-text);
+            box-shadow: 0 -5px 20px rgba(255, 0, 255, 0.3);
+        }
+
+        footer a {
+            color: var(--radium-pink);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: var(--radium-blue);
+        }
+        .photo-gallery {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.photo-item {
+    text-align: center;
+    max-width: 300px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.photo-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.photo-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(255, 0, 255, 0.5);
+}
+
+.photo-item p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: var(--light-text);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-brand">Radium Music</div>
+            <div class="navbar-links">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('signin') }}">Sign In</a>
+                <a href="{{ url_for('signup') }}">Sign Up</a>
+                <a href="{{url_for('about')}}">About</a>
+            </div>
+        </nav>
+
+        <div class="content-container">
+            <h1>About Radium Music</h1>
+            <section>
+                <h2>Who We Are</h2>
+                <p>
+                    Radium Music is a next-generation music platform that empowers users to remix their favorite songs, 
+                    listen to previews, and explore unique soundscapes. With our secure and user-friendly system, 
+                    anyone can transform music into an unforgettable experience.
+                </p>
+            </section>
+
+            <section>
+                <h2>Why Choose Us?</h2>
+                <ul>
+                    <li>Remix tracks with advanced tools and listen to live previews.</li>
+                    <li>All user data is securely stored with hashed passwords for maximum protection.</li>
+                    <li>Enhanced account safety with OTP email verification.</li>
+                    <li>Seamless integration with YouTube for music downloads and remixes.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Get Started</h2>
+                <p>
+                    Join the Radium Music community today. Whether you're a music lover, aspiring DJ, or casual 
+                    experimenter, Radium Music is your canvas for creativity.
+                </p>
+                <button><a href="{{ url_for('signup') }}" class="btn btn-primary">Sign Up Now</a></button>
+            </section>
+        </div>
+        <section>
+            <h2>About us</h2>
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='mk.jpeg') }}" alt="Radium Music Experience">
+                    <p>Frontend + Backend + Database</p>
+                </div>
+                <div class="photo-item">
+                    <img src="{{ url_for('static', filename='images/photo2.jpg') }}" alt="Radium Music Creativity">
+                    <p>Unleash your creativity with Radium Music.</p>
+                </div>
+            </div>
+        </section>
+        
+
+        <footer>
+            <p>© 2024 Radium Music. All rights reserved.</p>
+            <p>Follow us on:
+                <a href="#">Facebook</a> |
+                <a href="#">Twitter</a> |
+                <a href="#">Instagram</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
