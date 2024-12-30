@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radium Music - Sign Up</title>
+    <title>Radium Music - Sign In</title>
     <style>
         :root {
             --radium-pink: #ff00ff;
             --radium-blue: #00ffff;
             --dark-bg: #121212;
             --light-text: #ffffff;
+            --form-padding: clamp(15px, 4vw, 30px);
+            --heading-size: clamp(18px, 4vw, 24px);
+            --input-padding: clamp(8px, 2vw, 12px);
+            --button-padding: clamp(10px, 2.5vw, 12px);
+            --label-size: clamp(12px, 2vw, 14px);
+            --link-size: clamp(12px, 1.8vw, 14px);
         }
 
         body, html {
@@ -18,108 +24,276 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--dark-bg);
             color: var(--light-text);
-            height: 90%;
-            background-image: url(/static/signup1.jpg);
-            background-size: cover;
+            height: 100%;
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.5;
         }
 
         .container {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
-            padding: 10px;
-        }
-
-        .signup-form {
-            background-color: black;
-            padding: 30px;
-            border-radius: 10px;
+            min-height: 100vh;
+            padding: clamp(10px, 3vw, 20px);
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            overflow: hidden;
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
         }
 
-        h1 {
+        .container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, 
+                rgba(70, 130, 180, 0.6), 
+                rgba(255, 105, 180, 0.6));
+            background-size: 200% 200%;
+            animation: rotate-border 8s ease-in-out infinite;
+        }
+
+        @keyframes rotate-border {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .signin-form {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: var(--form-padding);
+            border-radius: clamp(8px, 2vw, 10px);
+            width: min(90%, 400px);
+            box-shadow: 0 0 clamp(10px, 3vw, 20px) rgba(255, 0, 255, 0.3);
+            box-sizing: border-box;
+             backdrop-filter: blur(10px); 
+        }
+
+        h2 {
             color: var(--radium-blue);
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: clamp(15px, 4vw, 20px);
             text-shadow: 0 0 10px var(--radium-pink);
+            font-size: var(--heading-size);
+            letter-spacing: 0.5px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: clamp(15px, 3vw, 20px);
+            width: 100%;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: clamp(6px, 1.5vw, 8px);
             color: var(--radium-pink);
+            font-size: var(--label-size);
+            font-weight: 500;
         }
 
         input[type="email"],
         input[type="password"] {
-            width: 90%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
+            width: 100%;
+            padding: var(--input-padding);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: clamp(4px, 1vw, 5px);
             background-color: rgba(255, 255, 255, 0.1);
             color: var(--light-text);
+            box-sizing: border-box;
+            margin-bottom: clamp(8px, 2vw, 15px);
+            font-size: clamp(14px, 1.8vw, 16px);
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--radium-blue);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: clamp(12px, 1.8vw, 14px);
         }
 
         button {
-            width: 90%;
-            padding: 10px;
+            width: 100%;
+            padding: var(--button-padding);
             border: none;
-            border-radius: 5px;
-            background-color: var(--radium-pink);
+            border-radius: clamp(20px, 4vw, 25px);
+            background: linear-gradient(45deg, var(--radium-pink), var(--radium-blue));
             color: var(--light-text);
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: all 0.3s ease;
+            margin-bottom: clamp(10px, 2vw, 15px);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         button:hover {
-            background-color: var(--radium-blue);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .additional-links {
+            text-align: center;
+            margin-top: clamp(15px, 3vw, 20px);
+        }
+
+        .additional-links a {
+            color: var(--radium-blue);
+            text-decoration: none;
+            font-size: var(--link-size);
+            margin: 0 clamp(5px, 1.5vw, 10px);
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: clamp(3px, 1vw, 5px);
+        }
+
+        .additional-links a:hover {
+            color: var(--radium-pink);
+            text-shadow: 0 0 5px var(--radium-blue);
             transform: scale(1.05);
         }
 
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        @media (max-width: 480px) {
-            .signup-form {
-                padding: 20px;
+        @media (max-height: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .signin-form {
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            h2 {
+                margin-bottom: 10px;
+            }
+            
+            .form-group {
+                margin-bottom: 10px;
             }
         }
+
+        @media (max-width: 350px) {
+            .additional-links {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .additional-links a {
+                margin: 0;
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            .container::before {
+                position: absolute;
+                background-attachment: scroll;
+            }
+        }
+        
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.5s ease-out;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--radium-blue);
+            text-shadow: 0 0 10px var(--radium-pink);
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .navbar-links a:hover {
+            color: var(--radium-pink);
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);}
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-brand">Radium Music</div>
+        <div class="navbar-links">
+            <a href="{{url_for('index')}}">Home</a>
+            <a href="{{url_for('signin')}}">Sign in</a>
+            <a href="{{url_for('signup')}}">Sign Up</a>
+            <a href="{{url_for('about')}}">About</a>
+        </div>
+    </nav>
+
     <div class="container">
-        <form class="signup-form" id="signupForm" method="POST" action="/signup">
-            <h1>Sign Up for Radium Music</h1>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required aria-required="true">
+        <div class="signin-form">
+            <h2>Sign In to Radium Music</h2>
+            
+            <form action="/signin_function" method="POST">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        required 
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        required 
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <button type="submit">Sign In</button>
+            </form>
+
+            <div class="additional-links">
+                <!-- <a href="/forgot-password">Forgot Password?</a> -->
+                <a href="/signup">Create Account</a>
             </div>
-
-    <script>
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.style.display = 'none'; // Reset error message display
-
-            if (password !== confirmPassword) {
-                event.preventDefault(); // Prevent form submission
-                errorMessage.textContent = "Passwords do not match!";
-                errorMessage.style.display = 'block';
-            }
-        });
-    </script>
+        </div>
+    </div>
 </body>
 </html>
